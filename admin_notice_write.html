@@ -84,6 +84,16 @@
     <script src="./assets/js/supabase-config.js"></script>
     
     <script>
+        // Supabase 로드 대기 함수 (네트워크 지연 대비)
+        async function waitForSupabase() {
+            let attempts = 0;
+            while (!window.supabaseInstance && attempts < 20) {
+                await new Promise(r => setTimeout(r, 100)); // 0.1초 대기
+                attempts++;
+            }
+            return window.supabaseInstance;
+        }
+
         let editorInstance;
 
         // 1. Supabase 이미지 업로드 어댑터 (CKEditor용)
@@ -94,7 +104,7 @@
 
             upload() {
                 return this.loader.file.then(file => new Promise(async (resolve, reject) => {
-                    const sb = window.supabaseInstance;
+                    const sb = await waitForSupabase();
                     if (!sb) return reject('Supabase not initialized');
 
                     try {
@@ -106,7 +116,12 @@
                             .from('notice-files')
                             .upload(fileName, file);
 
-                        if (error) throw error;
+                        if (error) {
+                            if (error.message.includes('Bucket not found') || error.statusCode === '404') {
+                                alert('오류: Supabase Storage에 "notice-files" 버킷이 없습니다.\n대시보드에서 버킷을 생성해주세요.');
+                            }
+                            throw error;
+                        }
 
                         // 공개 URL 가져오기
                         const { data: { publicUrl } } = sb.storage
@@ -221,8 +236,8 @@
             $submitBtn.prop('disabled', true).text('저장 중...');
 
             try {
-                const sb = window.supabaseInstance || (window.ABCDX && window.ABCDX.supabase) || (window.supabase && window.supabase.createClient && window.supabase.createClient(window._SB_URL, window._SB_KEY));
-                if (!sb) throw new Error('데이터베이스 연결 실패');
+                const sb = await waitForSupabase();
+                if (!sb) throw new Error('데이터베이스에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.');
 
                 // [1] 공지사항 본문 저장
                 const { data: notice, error: noticeError } = await sb
@@ -246,7 +261,12 @@
                             .from('notice-files')
                             .upload(filePath, file);
                         
-                        if (upErr) throw upErr;
+                        if (upErr) {
+                            if (upErr.message.includes('Bucket not found')) {
+                                throw new Error('"notice-files" 버킷이 존재하지 않습니다.');
+                            }
+                            throw upErr;
+                        }
 
                         // 2. Public URL 획득
                         const { data: urlData } = sb.storage
