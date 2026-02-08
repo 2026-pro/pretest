@@ -1,0 +1,435 @@
+
+.desktop{
+    display: none;
+}
+.about-wrap section{
+    padding:40px 0;
+}
+.about-wrap .section-header{
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.about-wrap .section-header>span{
+    color:var(--brand-color);
+    font-size: 15px;
+    line-height: 1.1em;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+}
+.about-wrap .section-header p{
+    color:#f3f3f3;
+    margin-top: 20px;
+}
+.why-abcd .benefit-list{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 8px;
+}
+.why-abcd .benefit-list li{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+.why-abcd .benefit-list li .title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.why-abcd .benefit-list li .title img{
+    width: 28px;
+}
+.why-abcd .benefit-list li .desc{
+    color:var(--text-color-p1);
+}
+.about-wrap .about-iam{
+    padding-bottom: 60px;
+}
+.iam-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+}
+.iam-list>li{
+    background-color: #fff;
+    padding:32px;
+    border-radius: 24px;
+    background-color: rgba(243, 243, 243,0.03);
+    flex: 1;
+}
+.iam-list>li .num{
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.12;
+}
+.iam-list>li .title span{
+    color:var(--brand-color);
+}
+.iam-list>li .desc{
+    margin-top: 26px;
+    color:var(--text-color-p1);
+}
+.iam-list>li .desc strong{
+    display: block;
+    margin-bottom: 4px;
+}
+.iam-list>li .desc br{
+    display: none;
+}
+.iam-list>li .desc p{
+    line-height: 1.6em;
+}
+.about-wrap .abcd-2025{
+    background-color: var(--bg-darkgray2);
+}
+.about-wrap .abcd-2025 .inner{
+    max-width: unset;
+    width: 100%;
+}
+.abcd-2025 .contents-info{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.abcd-2025 .contents-info .img img{
+    display: block;
+    margin:0 auto;
+    max-width: 300px;
+    width: 100%;
+    box-shadow: 0 20px 100px 0 rgba(0, 156, 254, 0.25);
+}
+.abcd-2025 .contents-info .info table tbody{ 
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.abcd-2025 .contents-info .info table tr{ 
+    display: flex;
+    flex-direction: column;
+}
+.abcd-2025 .contents-info .info-btns{
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 20px;
+}
+.abcd-2025 .contents-info .info-btns a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 4px);
+    height: 42px;
+    border-radius: 6px;
+    background-color: var(--brand-color);
+    font-size: 16px;
+    gap: 4px;
+    font-weight: 500;
+}
+.abcd-2025 .contents-info .info-btns a span{
+    transform: translate(0,1px);
+}
+.abcd-2025 .contents-info .info-btns a img{
+    width: 19px;
+    margin-top: -1px;
+}
+.about-wrap .abcd-keyword{
+    padding-bottom: 80px;
+    overflow: hidden;
+}
+.about-wrap .abcd-keyword .swiper{
+    overflow: visible;
+}
+.keyword-tab{
+    margin-bottom: 40px;
+}
+.keyword-tab .swiper-slide{
+    width: auto;
+}
+.keyword-tab .swiper-slide button{
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+    box-sizing: border-box;
+    height: 45px;
+    padding:0 22px;
+    border:1px solid #f3f3f3;
+    border-radius: 1000px;
+    font-size: 15px;
+    color:#f3f3f3;
+    letter-spacing: -0.01em;
+    font-family: 'Exo 2', sans-serif;
+    transition: all 0.3s ease;
+}
+.keyword-tab .swiper-slide.active button{
+    border-color: var(--brand-color);
+    background-color: var(--brand-color);
+}
+.keyword-slide .swiper-slide{
+    background-color: #fff;
+    padding:16px;
+    border-radius: 20px;
+    opacity: 0.15;
+    transition: opacity 0.3s ease;
+}
+.keyword-slide .swiper-slide.swiper-slide-active{
+    opacity: 1;
+}
+.keyword-slide .swiper-slide .img{
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    aspect-ratio: 268 / 172;
+    margin-bottom: 20px;
+}
+.keyword-slide .swiper-slide .img .bg{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.keyword-slide .swiper-slide .info{
+    color:#111;
+}
+.keyword-slide .swiper-slide .info span{
+    color:var(--brand-color);
+    display: block;
+}
+.keyword-slide .swiper-slide .info .title{   
+    margin-top: 4px;
+}
+.keyword-slide .swiper-slide .info .sub-title{
+    margin-top: 8px;
+    color:#111;
+}
+
+@media (min-width:800px){
+    .about-wrap section{
+        padding:60px 0;
+    }
+    .why-abcd .section-header{
+        margin-bottom: 68px;
+    }
+    .why-abcd .benefit-list{
+        padding-bottom: 20px;
+        padding-top: 0;
+    }
+
+    .about-wrap .about-iam{
+        padding-bottom: 100px;
+    }
+    .iam-list{
+        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .iam-list>li{
+        width: calc((100% - 20px) / 2);
+        flex:unset;
+        padding:32px 32px 46px;
+    }
+    .iam-list>li:last-child{
+        width: 100%;
+    }
+
+    .about-wrap .abcd-2025{
+        padding:100px 0 143px;
+    }
+    .abcd-2025 .section-header{
+        margin-bottom: 60px;
+    }
+    .abcd-2025 .contents-info{
+        gap: 60px;
+    }
+    .abcd-2025 .contents-info .img img{
+        max-width: 360px;
+    }
+    .abcd-2025 .contents-info .info table tbody{
+        display: block;
+    }
+    .abcd-2025 .contents-info .info table tr{
+        display: table-row;
+    }
+    .abcd-2025 .contents-info .info table th{
+        vertical-align: top;
+        display: table-cell;
+        width: 106px;
+        padding:8px 0;
+    }
+    .abcd-2025 .contents-info .info table td{
+        vertical-align: top;
+        display: table-cell;
+        padding:8px 0;
+    }
+    .abcd-2025 .contents-info .info-btns{
+        margin-top: 40px;
+        gap: 12px;
+        justify-content: flex-end;
+    }
+    .abcd-2025 .contents-info .info-btns a{
+        padding:0 21px;
+        width: auto;
+        line-height: 42px;
+    }
+
+    .about-wrap .abcd-keyword{
+        padding:100px 0;
+    }
+    .keyword-slide{
+        max-width: 560px;
+        margin:0 auto;
+    }
+    .keyword-slide .swiper-wrapper{
+        align-items: stretch;
+    }
+    .keyword-slide .swiper-slide{
+        padding:28px;
+        border-radius: 40px;
+    }
+    .keyword-slide .swiper-slide .img{
+        border-radius: 28px;
+        margin-bottom: 29px;
+    }
+    .keyword-slide .swiper-slide .info .title{
+        margin-top: 12px;
+    }
+    .keyword-slide .swiper-slide .info .sub-title{
+        margin-top: 12px;
+    }
+}
+  
+
+@media (min-width:1200px){
+    .desktop{
+        display: inline-block;
+    }
+    .about-wrap section{
+        padding:120px 0;
+    }
+    .why-abcd .section-header{
+        margin-bottom: 100px;
+    }
+    .about-wrap .why-abcd{
+        padding-bottom: 60px;
+    }
+    .why-abcd .benefit-list{
+        padding-bottom: 40px;
+        padding-top: 40px;
+        gap: 40px 80px;;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .why-abcd .benefit-list li{
+        width: calc((100% - 80px) / 2);
+    }
+    .why-abcd .benefit-list li .title{
+        gap: 16px;
+    }
+    .why-abcd .benefit-list li .title img{
+        width: 34px;
+    }
+
+    .about-wrap .about-iam{
+        padding:120px 0 160px;
+    }
+    .about-wrap .section-header{
+        margin-bottom: 60px;
+    }
+    .iam-list{
+        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .iam-list>li{
+        width: calc((100% - 40px) / 3);
+        flex:unset;
+        padding:60px;
+    }
+    .iam-list>li:last-child{
+        width: calc((100% - 40px) / 3);
+    }
+    .iam-list>li .num{
+        margin-bottom: 20px;
+    }
+    .iam-list>li .desc{
+        margin-top: 40px;
+    }
+
+    .about-wrap .abcd-2025{
+        padding:100px 0 ;
+    }
+    .abcd-2025 .section-header{
+        margin-bottom: 80px;
+    }
+    .abcd-2025 .contents-info{
+        display: flex;
+        align-items: stretch;
+        flex-direction: row;
+        justify-content: center;
+        gap: 60px;
+        margin:0 auto;
+        max-width: 1118px;
+    }
+    .abcd-2025 .contents-info .img{
+        width: 405px;
+    }
+    .abcd-2025 .contents-info .img img{
+        max-width: 405px;
+    }
+    .abcd-2025 .contents-info .info{
+        width: 100%;
+        max-width: calc(100% - 465px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .abcd-2025 .contents-info .info table th{
+        width: 108px;
+        padding:9.5px 0;
+    }
+    .abcd-2025 .contents-info .info table td{
+        padding:9.5px 0;
+    }
+    .abcd-2025 .contents-info .info-btns{
+        margin-top: 20px;
+        gap: 12px;
+    }
+  
+    .abcd-keyword .section-header{
+        margin-bottom: 40px;
+    }
+    .about-wrap .abcd-keyword{
+        padding:120px 0 180px;
+    }
+
+    .keyword-slide{
+        max-width: 1039px;
+        margin:0 auto;
+    }
+    .keyword-slide .swiper-wrapper{
+        align-items: stretch;
+    }
+    .keyword-slide .swiper-slide{
+        padding:40px;
+    }
+    .keyword-slide .swiper-slide .img{
+        margin-bottom: 40px;
+    }
+    .keyword-slide .swiper-slide .info .title{
+        margin-top: 12px;
+    }
+    .keyword-slide .swiper-slide .info .sub-title{
+        margin-top: 12px;
+    }
+ 
+}

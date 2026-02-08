@@ -1,0 +1,505 @@
+html,body{
+    background-color: var(--background-color);
+    background-position: center top;
+    background-image: url(../images/main-bg-mobile.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-color: #000;
+}
+body{
+    padding-top: 0;
+}
+#content{
+    position: relative;
+}
+.hero-section{
+    background: transparent url(../images/hero-mobile.svg) no-repeat center center / cover;
+    height: 600px;
+}
+.hero-section .inner{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+}
+.hero-section h2{
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+.hero-section .text-animation img{
+    display: block;
+    width: 123px;
+}
+.hero-section .text-animation svg{
+    display: block;
+    width: 123px;
+    height: auto;
+}
+:root{
+    /* 전체 타이밍 조절 */
+    --draw-duration: 4.5s;     /* 선 그리기 시간 */
+    --sweep-duration: 4.5s;    /* 좌→우 클립 스윕 시간 (stroke와 동일 권장) */
+    --fill-delay: 0.7s;        /* fill 등장 지연 (stroke 거의 끝날 때) */
+    --fill-duration: 1s;
+    --stroke-color: #fff;
+    --fill-color: #fff;
+    --stroke-width: 2.2;       /* 필요 시 조절 */
+  }
+
+  @keyframes sweep {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fillin {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .masked{
+    clip-path: url(#ltr-clip);
+  }
+
+  .stroke-layer path{
+    fill: none;
+    stroke: var(--stroke-color);
+    stroke-width: var(--stroke-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: draw var(--draw-duration) ease forwards;
+  }
+
+  .fill-layer path{
+    fill: var(--fill-color);
+    opacity: 0;
+    animation: fillin var(--fill-duration) ease forwards;
+    animation-delay: var(--fill-delay);
+  }
+
+  #clip-rect{
+    transform-origin: left center;
+    animation: sweep var(--sweep-duration) ease forwards;
+  }
+
+
+.hero-section p{
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+.hero-section .inner>strong{
+    display: block;
+    background: linear-gradient(to bottom, #F8D436, #FFF3BB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-section p:last-child{
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.main-wrap{
+    position: relative;
+    z-index: 2;
+}
+.main-wrap .section-header .section-title{
+    display: block;
+   
+}
+.abcd-intro{
+    padding:60px 0 20px;
+}
+.abcd-intro .intro-wrap{
+    display: flex;
+    flex-direction: column;
+}
+.abcd-intro .section-header{
+    margin-bottom: 28px;
+}
+.abcd-intro .section-title{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.abcd-intro .section-content{
+    color:var(--text-color-1);
+    word-break: keep-all;
+}
+.abcd-intro .section-content p br{
+    display: none;
+}
+.abcd-intro .section-content p+p{
+    margin-top: 1.6em;
+}
+.abcd-intro .intro-img{
+    margin-top: 20px;
+    background: transparent url(../images/intro-mobile.jpg) no-repeat center center / cover;
+    width: 100%;
+    /* aspect-ratio: 320 / 231; */
+    height: 231px;
+}
+.theme {
+    padding-top: 40px;
+}
+.theme .section-header{
+    margin-bottom: 40px;
+}
+.theme .theme-list{
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+}
+.theme .theme-list>li dl dt{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin:0 0 20px;
+}
+.theme .theme-list>li dl dt img{
+    width: 28px;
+}
+.theme .theme-list>li dl dd{
+    color:var(--text-color-1);
+}
+.theme .theme-img{
+    margin-top: 80px;
+    border-radius: 12px;
+    background: transparent url(../images/theme-mobile.jpg) no-repeat center center / cover;
+    width: 100%;
+    height: 345px;
+}
+.programs{
+    padding:60px 0 6px;
+}
+.programs .section-header{
+    margin-bottom: 22px;
+}
+.programs .section-title{
+    margin-bottom: 20px;
+}
+.programs .section-summary{
+    word-break: keep-all;
+    color:var(--text-color-1)
+}
+.programs .swiper-contorls{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.programs .swiper-contorls button{
+    border:0;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -9999px;
+    width: 38px;
+    aspect-ratio: 1 / 1;
+    transition: background 0.3s;
+}
+.programs .swiper-contorls .program-slide-prev{
+    background: transparent url(../images/arrow_left_off.svg) no-repeat center center / cover;
+}
+.programs .swiper-contorls .program-slide-next{
+    background: transparent url(../images/arrow_right_off.svg) no-repeat center center / cover;
+}
+.programs .swiper-contorls .program-slide-prev:hover{
+    background: transparent url(../images/arrow_left_on.svg) no-repeat center center / cover;
+}
+.programs .swiper-contorls .program-slide-next:hover{
+    background: transparent url(../images/arrow_right_on.svg) no-repeat center center / cover;
+}
+.programs .swiper{
+    padding-top: 10px;
+}
+.programs .swiper-slide{
+    transition:  transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)
+}
+.programs .swiper-slide a{
+    display: block;
+    color:#fff;
+}
+.programs .swiper-slide:hover{
+    transform: translate(0,-10px);
+    
+}
+.programs .swiper-slide .thumb{
+    margin-bottom: 12px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+.programs .swiper-slide .thumb img{
+    display: block;
+    width: 100%;
+    transition: transform 0.6s ease-out;
+}
+.programs .swiper-slide a:hover .thumb img{
+    transform: scale(1.06) ;
+}
+.programs .swiper-slide .text strong{
+    font-weight: 700;
+    display: block;
+}
+.light {
+    position: absolute;
+    width: 948px;
+    aspect-ratio: 948 / 1039;
+    background: rgba(76, 120, 180, 0.5); /* 피그마 Accent/Accent2 + 투명도 50% */
+    border-radius: 1000px; /* 모서리 반경 */
+    filter: blur(800px);  /* 레이어 흐림 (값은 조정 가능) */
+    bottom:218px;
+    left:0;
+    transform: translate(-100%, 0) rotate(39deg);
+    pointer-events: none; /* 클릭 방해 X */
+    will-change: transform, filter;
+    contain: paint;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+
+  @media (min-width:800px){
+    html,body{
+        background-image: url(../images/main-bg-tablet.png);
+    }
+    .hero-section{
+        height: 628px;
+        background-image: url(../images/hero-tablet.svg);
+    }
+    .hero-section h2{
+        gap: 8px;
+    }
+    .hero-section h2>img{
+        width: 45px;
+    }
+    .hero-section .text-animation img,
+    .hero-section .text-animation svg{
+        width: 171px;
+        margin-left: 5px;
+    }
+    .hero-section p{
+        margin-top: 12px;
+        margin-bottom: 20px;
+    }
+    .hero-section p br{
+        display: none;
+    }
+    .hero-section .inner>strong{
+        display: block;
+        background: linear-gradient(to bottom, #F8D436, #FFF3BB);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero-section p:last-child{
+        margin-top: 12px;
+        margin-bottom: 0;
+    }
+
+    .abcd-intro{
+        padding:100px 0 40px;
+    }
+    .main-wrap .abcd-intro .section-title{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: baseline;
+    }
+    .abcd-intro .section-content{
+        color:var(--text-color-1);
+        word-break: keep-all;
+    }
+    .abcd-intro .intro-img{
+        margin-top: 24px;
+        background: transparent url(../images/intro-tablet.jpg) no-repeat center center / cover;
+        height: 417px;
+    }
+    .theme .section-header{
+        margin-bottom: 60px;
+    }
+    .theme .theme-list{
+        gap: 44px 24px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .theme .theme-list>li{
+        width: calc(50% - 12px);
+    }
+    .theme .theme-img{
+        border-radius: 20px;
+        background: transparent url(../images/theme-tablet.jpg) no-repeat center center / cover;
+        width: 100%;
+        height: 320px;
+    }
+
+    .programs{
+        padding: 60px 0 54px;
+        overflow: hidden;
+    }
+    .programs .section-header{
+        margin-bottom: 26px;
+    }
+    .programs .section-title br{
+        display: none;
+    }
+    .programs .swiper{
+        overflow: visible;
+    }
+    .programs .swiper-slide .thumb{
+        border-radius: 20px;
+    }
+    .light {
+        position: absolute;
+        width: 800px;
+        aspect-ratio: 800 / 877;
+        background: rgba(76, 120, 180, 0.5); /* 피그마 Accent/Accent2 + 투명도 50% */
+        border-radius: 474px; /* 모서리 반경 */
+        filter: blur(380px);  /* 레이어 흐림 (값은 조정 가능) */
+        bottom:487px;
+        left:0;
+        transform: translate(calc(-100% + 80px), 0) rotate(24.9deg);
+        pointer-events: none; /* 클릭 방해 X */
+        will-change: transform, filter;
+        contain: paint;
+        z-index: 1;
+        pointer-events: none;
+      }
+    
+    
+  }
+  
+
+  @media (min-width:1200px){
+    html,body{
+        background-image: url(../images/main-bg-desktop.png);
+    }
+    .hero-section{
+        height: 969px;
+        background-image: url(../images/hero-desktop.svg);
+    }
+    .hero-section h2{
+        gap: 21px;
+        align-items: baseline;
+    }
+    .hero-section h2>img{
+        width: 81px;
+    }
+    .hero-section .text-animation img,
+    .hero-section .text-animation svg{
+        width: 307px;
+        margin-left: 6px;
+    }
+    .hero-section p{
+        margin-top: 12px;
+        margin-bottom: 20px;
+    }
+    .hero-section p br{
+        display: none;
+    }
+    .hero-section .inner>strong{
+        display: block;
+        background: linear-gradient(to bottom, #F8D436, #FFF3BB);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .hero-section p:last-child{
+        margin-top: 12px;
+        margin-bottom: 0;
+    }
+
+    .abcd-intro{
+        padding:100px 0 20px;
+    }
+    .main-wrap .abcd-intro .section-title{
+        gap: 12px;
+    }
+    .abcd-intro .section-content{
+        color:var(--text-color-1);
+        word-break: keep-all;
+    }
+    .abcd-intro .intro-wrap{
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 30px;
+    }
+    .abcd-intro .intro-text{
+        width: calc(50% - 30px);
+    }
+    .abcd-intro .section-content p br{
+        display: block;
+    }
+    .abcd-intro .intro-img{
+        background: transparent url(../images/intro-desktop.jpg) no-repeat center center / cover;
+        height: 442px;
+        width: 50%;
+    }
+    .theme {
+        padding-top: 80px;
+    }
+    .theme .section-header{
+        margin-bottom: 40px;
+    }
+    .theme .section-title br{
+        display: none;
+    }
+    .theme .theme-list{
+        padding-top: 40px;
+        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .theme .theme-list>li{
+        width: calc((100% - 60px) / 4);
+        padding-bottom: 40px;
+    }
+    .theme .theme-img{
+        border-radius: 40px;
+        background: transparent url(../images/theme-desktop.jpg) no-repeat center center / cover;
+        width: 100%;
+        margin-top: 100px;
+        height: 460px;
+    }
+
+    .programs{
+        padding: 160px 0 80px;
+        overflow: hidden;
+    }
+    .programs .section-header{
+        margin-bottom: 3px;
+    }
+    .programs .section-title{
+        margin-bottom: 40px;
+    }
+    .programs .swiper{
+        overflow: hidden;
+    }
+    .programs .swiper-contorls{
+    }
+    .programs .swiper-contorls button{
+        width: 58px;
+    }
+    .programs .swiper-slide .thumb{
+        border-radius: 28px;
+    }
+    #wrap{
+        overflow: hidden;
+    }
+    .light {
+        width: 1685px;
+        aspect-ratio: 1685 / 2553;
+        background: rgba(76, 120, 180, 0.5); /* 피그마 Accent/Accent2 + 투명도 50% */
+        border-radius: 1000px; /* 모서리 반경 */
+        filter: blur(800px);  /* 레이어 흐림 (값은 조정 가능) */
+        bottom:0;
+        left:0;
+        transform: translate(calc(-100% + 140px), 1766px) rotate(24.9deg);
+        pointer-events: none; /* 클릭 방해 X */
+        will-change: transform, filter;
+        contain: paint;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.2;
+      }
+  }

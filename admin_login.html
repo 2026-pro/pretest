@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>관리자 로그인</title>
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/form.css">
+  <link rel="stylesheet" href="./assets/css/admin-login.css">
+</head>
+<body>
+  <div id="wrap">
+    <div id="header-container"></div>
+    <script src="./assets/js/header.js"></script>
+
+    <main id="content">
+      <div class="inner">
+        <h1>관리자 로그인</h1>
+        <form id="admin-login-form">
+          <label>아이디 (ID)<input name="id" required></label>
+          <label>비밀번호 (Password)<input type="password" name="password" required></label>
+          <button type="submit">로그인</button>
+        </form>
+        <div id="login-msg" aria-live="polite"></div>
+      </div>
+    </main>
+
+    <div id="footer-container"></div>
+    <script src="./assets/js/footer.js"></script>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcryptjs.min.js"></script>
+
+  <script src="./assets/js/supabase-config.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('admin-login-form');
+        const msg = document.getElementById('login-msg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = form.id.value.trim();
+            const password = form.password.value.trim();
+            
+            msg.textContent = '로그인 확인 중...';
+            msg.style.color = '#666';
+
+            try {
+                // 전역 Supabase 클라이언트 인스턴스 확인 (라이브러리 객체(window.supabase)가 아님)
+                const sb = window.supabaseInstance;
+
+                if (!sb) {
+                  if (window.supabase) {
+                    console.warn('⚠️ Supabase 라이브러리는 로드되었지만 클라이언트 인스턴스(window.supabaseInstance)가 없습니다. supabase-config.js 초기화 확인 필요.');
+                  }
+                  throw new Error('Supabase 설정이 올바르지 않습니다. (supabase-config.js 확인 필요)');
+                }
+
+                console.log('🔍 관리자 정보 조회 시작:', id);
+
+                // 이미지 image_8927e3.png 확인 결과: 테이블명 'admins', 아이디 컬럼 'id'
+                const { data: user, error } = await sb
+                    .from('admins')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error || !user) {
+                    console.warn('⚠️ 사용자 조회 실패:', error?.message);
+                    throw new Error('아이디 또는 비밀번호가 일치하지 않습니다.');
+                }
+
+                console.log('✅ 사용자 데이터 확인 성공');
+
+                // DB의 비밀번호(admin!@34)와 직접 비교
+                if (user.password === password) {
+                    console.log('🎉 로그인 성공!');
+                    msg.textContent = '✓ 로그인 성공! 잠시 후 이동합니다.';
+                    msg.style.color = '#27ae60';
+                    
+                    // 로그인 세션 저장
+                    localStorage.setItem('isAdminLoggedIn', 'true');
+                    localStorage.setItem('adminData', JSON.stringify({
+                        id: user.id,
+                        name: user.name
+                    }));
+                    
+                    setTimeout(() => { location.href = './admin.html'; }, 800);
+                } else {
+                    throw new Error('비밀번호가 일치하지 않습니다.');
+                }
+
+            } catch (err) {
+                console.error('🔴 로그인 에러:', err);
+                msg.textContent = err.message;
+                msg.style.color = '#e74c3c';
+            }
+        });
+    });
+  </script>
+</body>
+</html>

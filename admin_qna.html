@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 관리 | 관리자</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="admin-wrap">
+                <div class="inner">
+                    <h1 class="page-title">Q&A 관리</h1>
+                    <p style="margin-bottom:24px;color:var(--text-color-p2);">사용자 문의에 답변을 등록할 수 있습니다.</p>
+                    <table class="admin-list-table">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>답변상태</th>
+                                <th>관리</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>3</td>
+                                <td><a href="./admin_qna_answer.html?id=1">전시회 부스 신청 문의</a></td>
+                                <td>홍길동</td>
+                                <td>2025.11.14</td>
+                                <td style="color:var(--accent-green);">답변완료</td>
+                                <td><a href="./admin_qna_answer.html?id=1">수정</a></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><a href="./admin_qna_answer.html?id=2">참가 등록 취소 방법</a></td>
+                                <td>김철수</td>
+                                <td>2025.11.11</td>
+                                <td style="color:var(--accent-green);">답변완료</td>
+                                <td><a href="./admin_qna_answer.html?id=2">수정</a></td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><a href="./admin_qna_answer.html?id=3">사전등록 혜택 문의</a></td>
+                                <td>이영희</td>
+                                <td>2025.11.08</td>
+                                <td style="color:var(--text-warning);">답변대기</td>
+                                <td><a href="./admin_qna_answer.html?id=3">답변하기</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+</body>
+</html>
+

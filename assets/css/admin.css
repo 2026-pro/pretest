@@ -1,0 +1,62 @@
+/* Admin Pages */
+.admin-wrap {
+    padding: 80px 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.admin-wrap .page-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+.admin-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+.admin-menu-card {
+    display: block;
+    padding: 32px;
+    background: var(--bg-darkgray2);
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #2C2C2C;
+    transition: border-color 0.3s, transform 0.3s;
+}
+.admin-menu-card:hover {
+    border-color: var(--brand-color);
+    transform: translateY(-2px);
+}
+.admin-menu-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.admin-menu-card p {
+    font-size: 14px;
+    color: var(--text-color-p2);
+    line-height: 1.5;
+}
+
+.admin-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.admin-list-table th,
+.admin-list-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #2C2C2C;
+}
+.admin-list-table th {
+    background: rgba(255,255,255,0.05);
+    font-weight: 600;
+}
+.admin-list-table td a {
+    color: inherit;
+    text-decoration: none;
+}
+.admin-list-table td a:hover {
+    color: var(--brand-color);
+}

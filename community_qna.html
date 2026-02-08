@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <div class="section-header">
+                        <h3 class="h-1-kr section-title">Q&A</h3>
+                        <a href="./community_qna_write.html" style="padding:10px 20px;background:var(--brand-color);color:#fff;text-decoration:none;border-radius:8px;font-size:14px;">글쓰기</a>
+                    </div>
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html">공지사항</a>
+                        <a href="./community_library.html">자료실</a>
+                        <a href="./community_qna.html" class="active">Q&A</a>
+                    </nav>
+                    <ul class="board-list">
+                        <li class="board-item">
+                            <a href="./community_qna_view.html?id=1">
+                                <span class="num">3</span>
+                                <span class="title">전시회 부스 신청 문의</span>
+                                <span class="date">2025.11.14</span>
+                                <span class="hit">45</span>
+                            </a>
+                        </li>
+                        <li class="board-item">
+                            <a href="./community_qna_view.html?id=2">
+                                <span class="num">2</span>
+                                <span class="title">참가 등록 취소 방법</span>
+                                <span class="date">2025.11.11</span>
+                                <span class="hit">32</span>
+                            </a>
+                        </li>
+                        <li class="board-item">
+                            <a href="./community_qna_view.html?id=3">
+                                <span class="num">1</span>
+                                <span class="title">사전등록 혜택 문의</span>
+                                <span class="date">2025.11.08</span>
+                                <span class="hit">67</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="pagination">
+                        <span class="current">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+</body>
+</html>
+

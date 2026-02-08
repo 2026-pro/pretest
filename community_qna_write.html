@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 글쓰기 | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <link rel="stylesheet" href="./assets/css/form.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html">공지사항</a>
+                        <a href="./community_library.html">자료실</a>
+                        <a href="./community_qna.html" class="active">Q&A</a>
+                    </nav>
+                    <form class="board-form form-wrap" action="#" method="post">
+                        <div class="form-group">
+                            <label>제목</label>
+                            <input type="text" name="title" placeholder="제목을 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label>내용</label>
+                            <textarea name="content" rows="8" placeholder="문의 내용을 입력하세요" required style="width:100%;padding:16px;border:1px solid #E8E8E8;border-radius:8px;min-height:200px;"></textarea>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="submit" class="btn btn-submit">등록</button>
+                            <a href="./community_qna.html" class="btn btn-cancel">취소</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+</body>
+</html>
+

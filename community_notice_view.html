@@ -1,0 +1,141 @@
+﻿﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 상세 | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+    <style>
+        /* CKEditor 5 콘텐츠 스타일 호환 */
+        .view-content figure.image { display: table; margin: 1em auto; max-width: 100%; }
+        .view-content figure.image img { display: block; max-width: 100%; height: auto; }
+        .view-content figure.image figcaption { display: table-caption; caption-side: bottom; text-align: center; color: #666; font-size: 0.9em; margin-top: 0.5em; }
+        
+        /* 유튜브 등 미디어 임베드 반응형 처리 */
+        .view-content figure.media { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin: 1em 0; }
+        .view-content figure.media iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        /* 리스트 스타일 복구 */
+        .view-content ul { list-style-type: disc; padding-left: 1.5em; margin: 1em 0; }
+        .view-content ol { list-style-type: decimal; padding-left: 1.5em; margin: 1em 0; }
+        .view-content blockquote { border-left: 4px solid #ccc; padding-left: 1em; margin: 1em 0; color: #555; font-style: italic; }
+        
+        /* 테이블 스타일 */
+        .view-content table { width: 100%; border-collapse: collapse; margin: 1em 0; }
+        .view-content table td, .view-content table th { border: 1px solid #ddd; padding: 8px; }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html" class="active">공지사항</a>
+                        <a href="./community_library.html">자료실</a>
+                        <a href="./community_qna.html">Q&A</a>
+                    </nav>
+                    <article class="board-view">
+                        <div class="view-header">
+                            <h2 class="view-title" id="view-title">로딩 중...</h2>
+                            <div class="view-meta">
+                                <span id="view-author">관리자</span>
+                                <span id="view-date">-</span>
+                                <span id="view-hit">-</span>
+                            </div>
+                        </div>
+                        <div class="view-content" id="view-content"></div>
+                        <div class="view-files" id="view-files" style="display:none;">
+                            <h4>첨부파일</h4>
+                            <div id="file-list"></div>
+                        </div>
+                    </article>
+                    <div class="btn-wrap" style="margin-top:40px;text-align:center;">
+                        <a href="./community_notice.html" class="btn" style="display:inline-block;padding:12px 32px;background:var(--bg-darkgray2);border-radius:8px;text-decoration:none;color:#fff;">목록</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            const sb = window.supabaseInstance;
+
+            if (!id) {
+                alert('잘못된 접근입니다.');
+                location.href = './community_notice.html';
+                return;
+            }
+
+            if (!sb) return;
+
+            try {
+                // 1. 공지사항 상세 조회
+                const { data: notice, error } = await sb
+                    .from('notices')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error || !notice) {
+                    alert('삭제되었거나 존재하지 않는 게시글입니다.');
+                    location.href = './community_notice.html';
+                    return;
+                }
+
+                // 2. 조회수 증가 처리 (현재 값 + 1)
+                const newViewCount = (notice.view_count || 0) + 1;
+                // 비동기로 업데이트 (사용자 경험을 위해 await 없이 실행하거나, 오류 무시)
+                sb.from('notices').update({ view_count: newViewCount }).eq('id', id).then(() => {
+                    console.log('조회수 증가 완료');
+                });
+
+                // 데이터 바인딩
+                document.getElementById('view-title').textContent = notice.title;
+                document.getElementById('view-date').textContent = new Date(notice.created_at).toLocaleDateString('ko-KR');
+                document.getElementById('view-hit').textContent = `조회 ${newViewCount}`; // 증가된 조회수 표시
+                document.getElementById('view-content').innerHTML = notice.content;
+
+                // 3. 첨부파일 조회
+                const { data: files } = await sb
+                    .from('notice_files')
+                    .select('*')
+                    .eq('notice_id', id);
+
+                if (files && files.length > 0) {
+                    const fileContainer = document.getElementById('view-files');
+                    const fileList = document.getElementById('file-list');
+                    fileContainer.style.display = 'block';
+
+                    fileList.innerHTML = files.map(file => `
+                        <a href="${file.file_url}" target="_blank" download>
+                            <span>📎</span> ${file.file_name} (${(file.file_size / 1024).toFixed(1)} KB)
+                        </a>
+                    `).join('');
+                }
+
+            } catch (err) {
+                console.error('상세 정보 로드 실패:', err);
+            }
+        });
+    </script>
+</body>
+</html>

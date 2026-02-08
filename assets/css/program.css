@@ -1,0 +1,197 @@
+body{
+    background: #191B1C;
+}
+.program-wrap{
+    padding:20px 0;
+}
+.program-item{
+    padding:20px 0;
+}
+.program-item .item-header{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    gap: 12px;
+}
+.program-item .item-header p{
+    color:#f3f3f3;
+    word-break: keep-all;
+}
+.program-item .item-header p br{
+    display: none;
+}
+.program-item .item-header a{
+    background-color: var(--brand-color);
+    border-radius: 6px;
+    line-height: 42px;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    letter-spacing: -0.04em;
+    font-weight:600;
+}
+.program-item .item-content{
+    margin-top: 20px;
+}
+.program-item .item-content .img{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    max-height: 260px;
+    aspect-ratio: 335 / 209;
+    width: 100%;
+}
+.program-item.item-1 .item-content .img{
+    background-image: url(../images/program/program-mobile-01.jpg);
+}
+.program-item.item-2 .item-content .img{
+    background-image: url(../images/program/program-mobile-02.jpg);
+}
+.program-item.item-3 .item-content .img{
+    background-image: url(../images/program/program-mobile-03.jpg);
+}
+.program-item.item-4 .item-content .img{
+    background-image: url(../images/program/program-mobile-04.jpg);
+}
+.program-item.item-5 .item-content .img{
+    background-image: url(../images/program/program-mobile-05.jpg);
+}
+.program-item.item-6 .item-content .img{
+    background-image: url(../images/program/program-mobile-06.jpg);
+}
+.program-item .item-content .info{
+    margin-top: 20px;
+}
+.program-item .item-content .info tbody{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color:#f3f3f3;
+}
+.program-item .item-content .info tbody tr{
+    display: flex;
+    flex-direction: column;
+}
+.program-item .item-content .info tbody th{
+    font-weight: 700;
+}
+
+
+@media (min-width:800px){
+    .program-item{
+        padding:40px 0;
+    }
+    .program-item .item-header{
+        gap: 12px;
+    }
+    .program-item .item-header p br{
+        display: block;
+    }
+    .program-item .item-header a{
+        position: absolute;
+        right:0;
+        bottom:0;
+        width: 110px;
+    }
+    .program-item .item-content{
+        margin-top: 40px;
+    }
+    .program-item .item-content .img{
+        max-height: unset;
+        height: 432px;
+        aspect-ratio: unset;
+    }
+    .program-item.item-1 .item-content .img{
+        background-image: url(../images/program/program-tablet-01.jpg);
+    }
+    .program-item.item-2 .item-content .img{
+        background-image: url(../images/program/program-tablet-02.jpg);
+    }
+    .program-item.item-3 .item-content .img{
+        background-image: url(../images/program/program-tablet-03.jpg);
+    }
+    .program-item.item-4 .item-content .img{
+        background-image: url(../images/program/program-tablet-04.jpg);
+    }
+    .program-item.item-5 .item-content .img{
+        background-image: url(../images/program/program-tablet-05.jpg);
+    }
+    .program-item.item-6 .item-content .img{
+        background-image: url(../images/program/program-tablet-06.jpg);
+    }
+    .program-item .item-content .info{
+        margin-top: 0;
+        padding:28px 0;
+    }
+    .program-item .item-content .info table{
+        text-align: fixed;
+    }
+    .program-item .item-content .info tbody{
+        display: table;
+        gap: unset;
+    }
+    .program-item .item-content .info tbody tr{
+        display: table-row;
+    }
+    .program-item .item-content .info tbody th,
+    .program-item .item-content .info tbody td{
+        vertical-align: top;
+        text-align: left;
+        display: table-cell;
+        padding:6px 0;
+    }
+    .program-item .item-content .info tbody th{
+        width: 104px;
+    }
+}
+  
+
+@media (min-width:1200px){
+    .program-wrap{
+        padding:40px 0;
+    }
+    .program-item{
+        padding:60px 0;
+    }
+    .program-item .item-header p br{
+        display: none;
+    }
+    .program-item .item-content{
+        margin-top: 60px;
+        display: flex;
+        align-items: stretch;
+        gap: 4%;
+    }
+    .program-item .item-content .img{
+        max-height: unset;
+        aspect-ratio: unset;
+        width: 48%;
+        max-height: 570px;
+        height: auto;
+    }
+    .program-item.item-1 .item-content .img{
+        background-image: url(../images/program/program-desktop-01.jpg);
+    }
+    .program-item.item-2 .item-content .img{
+        background-image: url(../images/program/program-desktop-02.jpg);
+    }
+    .program-item.item-3 .item-content .img{
+        background-image: url(../images/program/program-desktop-03.jpg);
+    }
+    .program-item.item-4 .item-content .img{
+        background-image: url(../images/program/program-desktop-04.jpg);
+    }
+    .program-item.item-5 .item-content .img{
+        background-image: url(../images/program/program-desktop-05.jpg);
+    }
+    .program-item.item-6 .item-content .img{
+        background-image: url(../images/program/program-desktop-06.jpg);
+    }
+    .program-item .item-content .info{
+        width: 48%;
+        margin-top: 0;
+        padding:28px 0;
+        border-top: 1px solid #e8e8e8;
+        border-bottom: 1px solid #e8e8e8;
+    }
+}

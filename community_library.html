@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자료실 | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <div class="section-header">
+                        <h3 class="h-1-kr section-title">자료실</h3>
+                    </div>
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html">공지사항</a>
+                        <a href="./community_library.html" class="active">자료실</a>
+                        <a href="./community_qna.html">Q&A</a>
+                    </nav>
+                    <ul class="board-list">
+                        <li class="board-item">
+                            <a href="./community_library_view.html?id=1">
+                                <span class="num">3</span>
+                                <span class="title">📎 ABCD X 2025 프로그램 가이드</span>
+                                <span class="date">2025.11.12</span>
+                                <span class="hit">156</span>
+                            </a>
+                        </li>
+                        <li class="board-item">
+                            <a href="./community_library_view.html?id=2">
+                                <span class="num">2</span>
+                                <span class="title">📎 참가업체 목록 (Excel)</span>
+                                <span class="date">2025.11.08</span>
+                                <span class="hit">234</span>
+                            </a>
+                        </li>
+                        <li class="board-item">
+                            <a href="./community_library_view.html?id=3">
+                                <span class="num">1</span>
+                                <span class="title">📎 부스 신청 양식</span>
+                                <span class="date">2025.10.25</span>
+                                <span class="hit">89</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="pagination">
+                        <span class="current">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+</body>
+</html>
+

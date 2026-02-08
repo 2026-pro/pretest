@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <div class="section-header">
+                        <h3 class="h-1-kr section-title">공지사항</h3>
+                    </div>
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html" class="active">공지사항</a>
+                        <a href="./community_library.html">자료실</a>
+                        <a href="./community_qna.html">Q&A</a>
+                    </nav>
+                    <ul class="board-list" id="notice-list">
+                        <!-- 스크립트로 데이터가 로드됩니다 -->
+                    </ul>
+                    <div class="pagination">
+                        <!-- 페이지네이션 기능은 추후 구현 필요 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const listContainer = document.getElementById('notice-list');
+            const sb = window.supabaseInstance;
+
+            if (!sb) {
+                console.error('Supabase 클라이언트가 초기화되지 않았습니다.');
+                return;
+            }
+
+            try {
+                // notices 테이블에서 데이터 조회 (최신순 정렬)
+                const { data: notices, error } = await sb
+                    .from('notices')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!notices || notices.length === 0) {
+                    listContainer.innerHTML = '<li class="board-item" style="justify-content:center; padding:20px;">등록된 공지사항이 없습니다.</li>';
+                    return;
+                }
+
+                listContainer.innerHTML = notices.map((notice, index) => {
+                    const date = new Date(notice.created_at).toLocaleDateString('ko-KR');
+                    // 번호는 전체 개수에서 역순으로 계산 (단순 표시용)
+                    const num = notices.length - index; 
+                    return `
+                        <li class="board-item">
+                            <a href="./community_notice_view.html?id=${notice.id}">
+                                <span class="num">${num}</span>
+                                <span class="title">${notice.title}</span>
+                                <span class="date">${date}</span>
+                                <span class="hit">${notice.view_count || 0}</span>
+                            </a>
+                        </li>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('공지사항 로드 실패:', err);
+                listContainer.innerHTML = '<li class="board-item" style="justify-content:center; color:red;">데이터를 불러오는데 실패했습니다.</li>';
+            }
+        });
+    </script>
+</body>
+</html>

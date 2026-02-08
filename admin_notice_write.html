@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 작성 | 관리자</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/form.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <!-- CKEditor 5 CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/classic/ckeditor.js"></script>
+    <script src="./assets/js/ui.js"></script>
+    <style>
+        /* CKEditor 스타일 커스텀 */
+        .ck-editor__editable { min-height: 400px; font-size: 15px; color: #333; }
+        .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) { border-color: #ddd; }
+        
+        /* 미디어(유튜브) 반응형 처리 */
+        .ck-media__wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 1em; }
+        .ck-media__wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+        /* 2. 첨부파일 UI 디자인 유지 및 보정 */
+        .file-attach-wrap { display: flex; flex-direction: column; gap: 8px; }
+        .file-attach-item { display: flex; align-items: center; gap: 12px; background: #f8f9fa; padding: 8px; border-radius: 4px; }
+        .file-attach-item input[type="file"] { display: none; }
+        .file-attach-item label { background: #1E96E1; color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 13px; }
+        /* 파일명 색상 강제 지정 (흰색 안보임 해결) */
+        .file-attach-item .file-name { color: #333 !important; font-size: 14px; flex: 1; font-weight: 500; }
+        .file-attach-item .file-name.empty { color: #999; }
+        .file-attach-item .remove-file { color: #e74c3c; cursor: pointer; font-size: 14px; font-weight: bold; margin-left: 5px; }
+        
+        .add-file-btn { background: #27ae60; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 8px; font-weight: 500; }
+        .add-file-btn:disabled { background: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="admin-wrap">
+                <div class="inner">
+                    <h1 class="page-title">공지사항 작성</h1>
+                    <form class="board-form form-wrap" id="notice-form">
+                        <div class="form-group">
+                            <label>제목</label>
+                            <input type="text" name="title" id="title" placeholder="제목을 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label>내용</label>
+                            <div class="editor-wrap">
+                                <textarea id="editor" name="content"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>첨부파일 (최대 10개)</label>
+                            <div class="file-attach-wrap" id="file-attach-wrap">
+                                <div class="file-attach-item">
+                                    <input type="file" class="attach-file" id="attach-files" name="files" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.hwp,.zip,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov">
+                                    <label for="attach-files" onclick="document.getElementById('attach-files').click(); return false;">파일 선택</label>
+                                    <span class="file-name empty" id="file-names">첨부할 파일을 선택하세요</span>
+                                    <div id="file-list" style="margin-top:8px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="submit" class="btn btn-submit">등록</button>
+                            <a href="./admin.html" class="btn btn-cancel">취소</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    
+    <script>
+        let editorInstance;
+
+        // 1. Supabase 이미지 업로드 어댑터 (CKEditor용)
+        class SupabaseUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+            }
+
+            upload() {
+                return this.loader.file.then(file => new Promise(async (resolve, reject) => {
+                    const sb = window.supabaseInstance;
+                    if (!sb) return reject('Supabase not initialized');
+
+                    try {
+                        const fileExt = file.name.split('.').pop();
+                        const fileName = `editor/${Date.now()}_${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+                        
+                        // Supabase Storage에 업로드
+                        const { data, error } = await sb.storage
+                            .from('notice-files')
+                            .upload(fileName, file);
+
+                        if (error) throw error;
+
+                        // 공개 URL 가져오기
+                        const { data: { publicUrl } } = sb.storage
+                            .from('notice-files')
+                            .getPublicUrl(fileName);
+
+                        resolve({ default: publicUrl });
+                    } catch (err) {
+                        console.error('이미지 업로드 실패:', err);
+                        reject(err.message);
+                    }
+                }));
+            }
+
+            abort() {
+                // 업로드 취소 로직 (필요 시 구현)
+            }
+        }
+
+        function SupabaseUploadPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new SupabaseUploadAdapter(loader);
+            };
+        }
+
+        // 2. CKEditor 초기화
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                extraPlugins: [SupabaseUploadPlugin],
+                mediaEmbed: {
+                    previewsInData: true
+                },
+                toolbar: {
+                    items: [
+                        'heading', '|',
+                        'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|',
+                        'outdent', 'indent', '|',
+                        'imageUpload', 'blockQuote', 'insertTable', 'mediaEmbed', 'undo', 'redo'
+                    ]
+                }
+            })
+            .then(editor => {
+                editorInstance = editor;
+                console.log('CKEditor initialized');
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // 2. 파일 첨부 관리 (single multi-file input with per-file UI)
+        var selectedFiles = []; // Array of File
+        const MAX_FILES = 10;
+
+        function renderFileList() {
+            const $list = $('#file-list');
+            $list.empty();
+            if (selectedFiles.length === 0) {
+                $('#file-names').text('첨부할 파일을 선택하세요').addClass('empty');
+                return;
+            }
+            $('#file-names').text('').removeClass('empty');
+            selectedFiles.forEach(function(f, idx) {
+                const $item = $(
+                    '<div class="file-attach-item" style="margin-top:6px; padding:6px;">'
+                    + '<span style="flex:1; font-size:13px;">' + f.name + '</span>'
+                    + '<button type="button" class="remove-file" data-idx="' + idx + '" style="background:transparent;border:none;color:#e74c3c;cursor:pointer">✕</button>'
+                    + '</div>'
+                );
+                $list.append($item);
+            });
+        }
+
+        // when user selects using native file picker, merge files into selectedFiles
+        $('#attach-files').on('change', function(e) {
+            const files = Array.prototype.slice.call(this.files || []);
+            if (files.length === 0) return;
+            // add up to limit, avoid duplicates by name+size
+            for (let f of files) {
+                if (selectedFiles.length >= MAX_FILES) break;
+                const duplicate = selectedFiles.find(sf => sf.name === f.name && sf.size === f.size && sf.lastModified === f.lastModified);
+                if (!duplicate) selectedFiles.push(f);
+            }
+            if (selectedFiles.length > MAX_FILES) {
+                selectedFiles = selectedFiles.slice(0, MAX_FILES);
+                alert('10개까지 첨부할 수 있습니다. 초과 항목은 무시됩니다.');
+            }
+            renderFileList();
+            // clear native input so same file can be selected again if needed
+            $(this).val('');
+        });
+
+        // remove file
+        $(document).on('click', '.remove-file', function() {
+            const idx = parseInt($(this).attr('data-idx'));
+            if (!isNaN(idx)) {
+                selectedFiles.splice(idx, 1);
+                renderFileList();
+            }
+        });
+
+        // 4. 데이터 등록 로직
+        $('#notice-form').on('submit', async function(e) {
+            e.preventDefault();
+            
+            const title = $('#title').val().trim();
+            const content = editorInstance.getData(); // CKEditor 데이터 가져오기
+            const $submitBtn = $('.btn-submit');
+            
+            if (!title) return alert('제목을 입력하세요');
+            if (!content) return alert('내용을 입력하세요');
+
+            $submitBtn.prop('disabled', true).text('저장 중...');
+
+            try {
+                const sb = window.supabaseInstance || (window.ABCDX && window.ABCDX.supabase) || (window.supabase && window.supabase.createClient && window.supabase.createClient(window._SB_URL, window._SB_KEY));
+                if (!sb) throw new Error('데이터베이스 연결 실패');
+
+                // [1] 공지사항 본문 저장
+                const { data: notice, error: noticeError } = await sb
+                    .from('notices')
+                    .insert([{ title, content }])
+                    .select()
+                    .single();
+
+                if (noticeError) throw noticeError;
+
+                // [2] 파일 업로드 처리 (selectedFiles array populated from picker)
+                if (selectedFiles && selectedFiles.length > 0) {
+                    // Promise.all로 병렬 처리하여 속도 및 안정성 향상
+                    const uploadPromises = selectedFiles.map(async (file) => {
+                        const fileExt = (file.name.split('.').pop() || 'bin');
+                        // 경로: notices/글ID/파일명
+                        const filePath = `notices/${notice.id}/${Date.now()}_${Math.random().toString(36).substr(2,5)}.${fileExt}`;
+                        
+                        // 1. Storage 업로드
+                        const { error: upErr } = await sb.storage
+                            .from('notice-files')
+                            .upload(filePath, file);
+                        
+                        if (upErr) throw upErr;
+
+                        // 2. Public URL 획득
+                        const { data: urlData } = sb.storage
+                            .from('notice-files')
+                            .getPublicUrl(filePath);
+
+                        // 3. DB에 파일 정보 저장 (notice_files 테이블)
+                        const { error: dbErr } = await sb
+                            .from('notice_files')
+                            .insert({
+                                notice_id: notice.id,
+                                file_name: file.name,
+                                file_url: urlData.publicUrl,
+                                file_size: file.size
+                            });
+                        
+                        if (dbErr) throw dbErr;
+                    });
+
+                    try {
+                        await Promise.all(uploadPromises);
+                        console.log('모든 파일 업로드 및 저장 완료');
+                    } catch (fileErr) {
+                        console.error('파일 처리 중 일부 실패:', fileErr);
+                        if(!confirm('글은 저장되었으나 일부 파일 업로드에 실패했습니다. 목록으로 이동하시겠습니까?')) {
+                            $submitBtn.prop('disabled', false).text('등록');
+                            return; 
+                        }
+                    }
+                }
+
+                alert('공지사항이 등록되었습니다.');
+                location.href = './admin.html';
+
+            } catch (err) {
+                console.error('등록 에러:', err);
+                alert('등록 중 오류가 발생했습니다: ' + err.message);
+                $submitBtn.prop('disabled', false).text('등록');
+            }
+        });
+    </script>
+</body>
+</html>

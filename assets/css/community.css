@@ -1,0 +1,286 @@
+/* Community - 공지사항, 자료실, Q&A */
+.community-wrap {
+    padding: 80px 0;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.community-wrap .section-header {
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.community-wrap .section-header .section-title {
+    margin: 0;
+}
+.community-wrap .community-tabs {
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #2C2C2C;
+    margin-bottom: 40px;
+}
+.community-wrap .community-tabs a {
+    padding: 12px 20px;
+    font-size: 15px;
+    color: var(--text-color-p2);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.3s, border-color 0.3s;
+}
+.community-wrap .community-tabs a:hover,
+.community-wrap .community-tabs a.active {
+    color: var(--brand-color);
+    border-bottom-color: var(--brand-color);
+}
+
+/* Board List */
+.board-list {
+    border-top: 2px solid #2C2C2C;
+}
+.board-list .board-item {
+    border-bottom: 1px solid #2C2C2C;
+    transition: background 0.3s;
+}
+.board-list .board-item a {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+}
+.board-list .board-item:hover {
+    background: rgba(255,255,255,0.03);
+}
+.board-list .board-item .num {
+    width: 50px;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--text-color-p2);
+    text-align: center;
+}
+.board-list .board-item .num.notice {
+    color: var(--brand-color);
+}
+.board-list .board-item .title {
+    flex: 1;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.board-list .board-item .title .attach-icon {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    vertical-align: middle;
+    opacity: 0.7;
+}
+.board-list .board-item .date {
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--text-color-p2);
+}
+.board-list .board-item .hit {
+    flex-shrink: 0;
+    width: 60px;
+    font-size: 14px;
+    color: var(--text-color-p2);
+    text-align: center;
+}
+.board-list.empty {
+    padding: 80px 20px;
+    text-align: center;
+    color: var(--text-color-p2);
+}
+
+/* Board View */
+.board-view {
+    border-top: 2px solid #2C2C2C;
+    padding: 40px 0;
+}
+.board-view .view-header {
+    padding-bottom: 24px;
+    border-bottom: 1px solid #2C2C2C;
+    margin-bottom: 32px;
+}
+.board-view .view-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+.board-view .view-meta {
+    display: flex;
+    gap: 24px;
+    font-size: 14px;
+    color: var(--text-color-p2);
+}
+.board-view .view-content {
+    font-size: 16px;
+    line-height: 1.7;
+    min-height: 200px;
+}
+.board-view .view-content img {
+    max-width: 100%;
+}
+.board-view .view-files {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #2C2C2C;
+}
+.board-view .view-files h4 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text-color-p2);
+}
+.board-view .view-files a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    color: var(--brand-color);
+    text-decoration: none;
+}
+.board-view .view-files a:hover {
+    text-decoration: underline;
+}
+
+/* Q&A Answer */
+.board-view .answer-box {
+    margin-top: 40px;
+    padding: 24px;
+    background: rgba(30, 150, 225, 0.1);
+    border-radius: 12px;
+    border-left: 4px solid var(--brand-color);
+}
+.board-view .answer-box .answer-label {
+    font-size: 12px;
+    color: var(--brand-color);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.board-view .answer-box .answer-content {
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* Board Write Form */
+.board-form .form-group {
+    margin-bottom: 24px;
+}
+.board-form .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.board-form .form-group input[type="text"] {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+}
+.board-form .editor-wrap {
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+.board-form .editor-wrap .ql-toolbar {
+    border: 0;
+    border-bottom: 1px solid #E8E8E8;
+    background: #f9f9f9;
+}
+.board-form .editor-wrap .ql-container {
+    border: 0;
+    min-height: 200px;
+}
+.board-form .file-attach-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.board-form .file-attach-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.board-form .file-attach-item input[type="file"] {
+    display: none;
+}
+.board-form .file-attach-item label {
+    padding: 8px 16px;
+    background: var(--brand-color);
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.board-form .file-attach-item .file-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text-color-p2);
+}
+.board-form .btn-wrap {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 40px;
+}
+.board-form .btn-wrap .btn {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+}
+.board-form .btn-wrap .btn-submit {
+    background: var(--brand-color);
+    color: #fff;
+}
+.board-form .btn-wrap .btn-cancel {
+    background: var(--bg-gray2);
+    color: #111;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-top: 40px;
+}
+.pagination a, .pagination span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    font-size: 14px;
+    color: var(--text-color-p1);
+    text-decoration: none;
+    border-radius: 6px;
+}
+.pagination a:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.pagination .current {
+    background: var(--brand-color);
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .board-list .board-item .hit { display: none; }
+    .board-list .board-item .num { width: 40px; font-size: 12px; }
+}

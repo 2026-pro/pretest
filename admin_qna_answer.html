@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 답변 | 관리자</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/form.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script src="./assets/js/ui.js"></script>
+    <style>
+        .ql-container.ql-snow { font-size: 14px; }
+        .ql-editor.ql-blank::before { color: #666; }
+        .ql-toolbar.ql-snow { background: #f9f9f9; border: 1px solid #E8E8E8; }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="admin-wrap">
+                <div class="inner">
+                    <h1 class="page-title">Q&A 답변</h1>
+                    <div class="board-view" style="margin-bottom:40px;">
+                        <div class="view-header">
+                            <h2 class="view-title" id="question-title">사전등록 혜택 문의</h2>
+                            <div class="view-meta">
+                                <span id="question-author">이영희</span>
+                                <span id="question-date">2025.11.08</span>
+                            </div>
+                        </div>
+                        <div class="view-content" id="question-content">
+                            <p>사전등록을 하면 어떤 혜택이 있나요?</p>
+                        </div>
+                    </div>
+                    <form class="board-form form-wrap" id="answer-form" action="#" method="post">
+                        <div class="form-group">
+                            <label>답변 내용</label>
+                            <div class="editor-wrap">
+                                <div id="editor"></div>
+                            </div>
+                            <input type="hidden" name="answer" id="answer-input">
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="submit" class="btn btn-submit">답변 등록</button>
+                            <a href="./admin_qna.html" class="btn btn-cancel">목록</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/community-api.js"></script>
+    
+    <script>
+        // Quill 에디터 초기화 (이미지, 비디오 포함)
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: '답변 내용을 입력하세요',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{'header': [1, 2, 3, false]}],
+                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                    ['blockquote', 'code-block'],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // URL에서 QnA ID 추출 (필요한 경우)
+        var urlParams = new URLSearchParams(window.location.search);
+        var qnaId = urlParams.get('id');
+
+        // QnA 데이터 로드 (있는 경우)
+        if (qnaId) {
+            ABCDX.community.qna.get(qnaId).then(function(qna) {
+                document.getElementById('question-title').textContent = qna.title;
+                document.getElementById('question-author').textContent = qna.author_name || '비회원';
+                document.getElementById('question-content').innerHTML = qna.content;
+                document.getElementById('question-date').textContent = new Date(qna.created_at).toLocaleDateString('ko-KR');
+            }).catch(function(err) {
+                console.error('Q&A 데이터 로드 실패:', err);
+            });
+        }
+
+        // Form submit 핸들러
+        $('#answer-form').on('submit', async function(e) {
+            e.preventDefault();
+            
+            var answer = quill.root.innerHTML;
+            var $submitBtn = $(this).find('.btn-submit');
+            
+            // 유효성 검사
+            if (quill.getText().trim().length === 0) {
+                alert('답변 내용을 입력하세요');
+                return;
+            }
+            
+            if (!qnaId) {
+                alert('Q&A ID가 없습니다. URL을 확인하세요.');
+                return;
+            }
+            
+            $submitBtn.prop('disabled', true);
+            $submitBtn.text('저장 중...');
+            
+            try {
+                var result = await ABCDX.community.qna.answer(qnaId, answer);
+                
+                if (!result.data) throw new Error('답변 저장 실패');
+                
+                console.log('✅ 답변 저장 성공');
+                alert('답변이 등록되었습니다.');
+                location.href = './admin_qna.html';
+                
+            } catch (err) {
+                console.error('❌ 저장 오류:', err);
+                alert('저장 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                $submitBtn.prop('disabled', false);
+                $submitBtn.text('답변 등록');
+            }
+        });
+    </script>
+</body>
+</html>
+

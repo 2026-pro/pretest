@@ -1,0 +1,581 @@
+.conference-wrap section{
+    padding:40px 0;
+    overflow: hidden;
+}
+.conference-wrap .section-header{
+    margin-bottom: 40px;
+    text-align: center;
+}
+.conference-wrap .section-header p{
+    margin-bottom: 12px;
+}
+
+.conference-intro .intro-list{
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+.conference-intro .intro-item{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.conference-intro .intro-item .img{
+    position: relative;
+    max-height: 175px;
+    aspect-ratio: 320 / 175;
+}
+.conference-intro .intro-item .img .bg{
+    position: absolute;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-image: url(/assets/images/conference-bg-mobile.png);
+}
+.conference-intro .intro-item .text{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.conference-intro .intro-item .text .item-header{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.conference-intro .intro-item .text .item-header strong{
+    color:var(--brand-color);
+}
+.conference-intro .intro-item .text .item-content p{
+    color:var(--text-color-p1);
+}
+.conference-intro .intro-item.item-2 .img{
+    order: 2;
+    margin-top: 20px;
+}
+.conference-intro .intro-item.item-2 .text{
+    order: 1;
+}
+.conference-intro .intro-item .text .item-content tbody{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.conference-intro .intro-item .text .item-content tbody tr{
+    display: flex;
+    flex-direction: column;
+}
+.conference-intro .intro-item .text .item-content tbody th{
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.7em;
+    letter-spacing: -0.05em;
+    color:#f3f3f3;
+}
+.conference-intro .intro-item .text .item-content tbody td{
+    font-size: 15px;
+    line-height: 1.7em;
+    letter-spacing: -0.05em;
+    font-weight: 400;
+    color:#f3f3f3;
+}
+.conference-intro .intro-item .text .item-content tbody td ul li{
+    position: relative;
+    padding-left: 1em;
+}
+.conference-intro .intro-item .text .item-content tbody td ul li::before{
+    content:'•';
+    position: absolute;
+    left:0;
+    top:0;
+    color:#f3f3f3;
+}
+.conference-intro .reg-btn{
+    background-color: var(--brand-color);
+    color:#111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    padding:12px 0;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.conference-wrap section.timetable{
+    overflow: hidden;
+}
+.conference-wrap .swiper-wrapper.center{
+    justify-content: center;
+    gap: 12px;
+}
+.conference-wrap .swiper-wrapper.center .swiper-slide{
+    margin:0 !important
+}
+.timetable-tab{
+    margin-top: -20px;
+    overflow: visible;
+}
+.timetable-tab .swiper-slide{
+    width: auto;
+}
+.timetable-tab .swiper-slide button{
+    padding:14px 22px;
+    border:1px solid #fff;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.1em;
+    letter-spacing: -0.01em;
+    border-radius: 1000px;
+    background-color: transparent;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.timetable-tab .swiper-slide button.active{
+    background-color: var(--brand-color);
+    border-color:var(--brand-color);
+    color:#fff;
+}
+.timetable-contents{
+    padding: 40px 0;
+    margin: 0 -20px;
+}
+.timetable-content{
+    display: none;
+}
+.timetable-content.active{
+    display: block;
+}
+.timetable-content h4{
+    margin-bottom: 12px;
+    padding: 0 20px;
+}
+.timetable-content .table-scroll{
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 20px 28px;
+    box-sizing: border-box;
+}
+.timetable-content .table-scroll::-webkit-scrollbar {
+    height: 3px;
+  }
+  
+.timetable-content .table-scroll::-webkit-scrollbar-track {
+    background: #323232;
+    border-radius: 100px;
+    margin:0 20px;
+  }
+  
+  .timetable-content .table-scroll::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 100px;
+  }
+  
+.timetable-content .table-scroll table{
+    table-layout: fixed;
+    width: 1440px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 20px;
+    border:1px solid #2C2C2C;
+    color:#111;
+}
+.timetable-content .table-scroll table .col1{
+    width: 200px;
+}
+.timetable-content .table-scroll table .col2{
+    width: 276px;
+}
+.timetable-content .table-scroll table .col3{
+    width: 459px;
+}
+.timetable-content .table-scroll table .col4{
+    width: 252.5px;
+}
+.timetable-content .table-scroll table th{
+    vertical-align: middle;
+    text-align: center;
+    box-sizing: border-box;
+    background: var(--bg-gray2);
+    height: 50px;
+    padding:11.5px 0;
+}
+.timetable-content .table-scroll table th+th,
+.timetable-content .table-scroll table td+td{
+    border-left: 1px solid #2C2C2C;
+}
+.timetable-content .table-scroll table td{
+    text-align: center;
+    vertical-align: middle;
+    box-sizing: border-box;
+    background: #fff;
+    border-top: 1px solid #2C2C2C;
+    padding:8px;
+    height: 70px;
+}
+
+.conference-wrap section.conference-speaker{
+    padding:80px 0;
+    overflow: hidden;
+}
+.speaker-tab-slide{
+    margin-bottom: 60px;
+    overflow: visible;
+}
+.speaker-tab-slide .swiper-slide{
+    width: auto;
+}
+.speaker-tab-slide .swiper-slide button{
+    padding:14px 22px;
+    border:1px solid #fff;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.1em;
+    letter-spacing: -0.01em;
+    border-radius: 1000px;
+    background-color: transparent;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.speaker-tab-slide .swiper-slide button.active{
+    background-color: var(--brand-color);
+    border-color:var(--brand-color);
+    color:#fff;
+}
+.speaker-content{
+    display: none;
+}
+.speaker-content.active{
+    display: block;
+}
+.speaker-content .swiper{
+    overflow: visible;
+}
+.speaker-content .swiper-slide{
+    width: 272px;
+}
+.speaker-content .swiper-slide button{
+    display: flex;
+    flex-direction: column;
+    border:0;
+    cursor: pointer;
+    border-radius: 16px;
+    background-color: transparent;
+    padding:0;
+    width: 100%;
+    overflow: hidden;
+}
+.speaker-content .swiper-slide .img{
+    position: relative;
+    aspect-ratio: 272 / 352;
+    overflow: hidden;
+}
+.speaker-content .swiper-slide .img .bg{
+    position: absolute;
+    left:0;
+    width: 100%;
+    height: 100%;
+    top:0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s ease;
+}
+.speaker-content .swiper-slide:hover .img .bg{
+    transform: scale(1.1);
+}
+.speaker-content .swiper-slide .info{
+    background: rgba(243,243,243,0.05);
+    padding:20px;
+    text-align: left;
+}
+.speaker-content .swiper-slide .info .p-1{
+    margin-top: 4px;
+    color:vaR(--text-color-p2);
+}
+
+.modal-mask{
+    display: none;;
+    position: fixed;
+    left:0;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+.speaker-modal{
+    display: none;
+    position: fixed;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+    z-index: 2000;
+    padding:20px;
+    margin:0 auto;
+    max-width: 375px;
+    background: #fff;
+    box-sizing: border-boxs;
+}
+.speaker-modal .modal-content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.speaker-modal .modal-content .img{
+    max-width: 220px;
+}
+.speaker-modal .modal-content .img img{
+    display: block;
+    width: 100%;
+}
+.speaker-modal .modal-content .info{
+    color:#111;
+}
+.speaker-modal .modal-content .info table{
+    width: 100%;
+}
+.speaker-modal .modal-content .info table tbody{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.speaker-modal .modal-content .info table tbody tr{
+    display: block;
+}
+.speaker-modal .modal-content .info table tbody tr th,
+.speaker-modal .modal-content .info table tbody tr td{
+    display: block;
+}
+.speaker-modal .modal-content .info table tbody tr td{
+    margin-top: 4px;
+}
+
+.speaker-modal .btn-close{
+    position: absolute;
+    right:20px;
+    top:20px;
+    border:0;
+    padding:0;
+    cursor: pointer;
+    overflow: hidden;
+    text-indent: -9999px;
+    background: transparent url(../images/icon_close.svg) no-repeat center center / cover;
+    width: 16px;
+    height: 16px;
+}
+
+
+
+@media (min-width:800px){
+    .conference-wrap section{
+        padding:60px 0;
+    }
+    .conference-wrap .section-header{
+        margin-bottom: 40px;
+    }
+    .conference-wrap .section-header br{
+        display: none;
+    }
+    .conference-intro .intro-item .text .item-header{
+        gap: 12px;
+    }
+    .conference-intro .intro-item .text .item-content tbody{
+        display: table;
+    }
+    .conference-intro .intro-item .text .item-content tbody tr{
+        display: table-row;
+    }
+    .conference-intro .intro-item .text .item-content tbody th{
+        width: 105px;
+        padding:8px 0;
+        vertical-align: top;
+    }
+    .conference-intro .intro-item .text .item-content tbody td{
+        padding:8px 0;
+        vertical-align: top;
+    }
+    .conference-intro .intro-list{
+        gap: 100px;
+    }
+    .conference-intro .intro-item .img{
+        height: 373px;
+        max-height: unset;
+        aspect-ratio: unset;
+    } 
+    .conference-intro .intro-item .img .bg{
+        background-image: url(../images/conference-bg-tablet.png);
+    }
+    .conference-intro .intro-item .text{
+        gap: 40px;
+    }
+    .conference-intro .intro-item.item-2 .img{
+        margin-top: 44px;
+    }
+    .conference-intro .reg-btn{
+        margin-top: 40px;
+        height: 61px;
+        border-radius: 6px;
+        padding:16px 0;
+    }
+    .timetable-tab{
+        margin-top: 0;
+    }
+    .timetable-contents{
+        padding:60px 0;
+        margin:0 -40px;
+    }
+    .timetable-content .table-scroll{
+        padding:0 40px 28px;
+    }
+    .timetable-content .table-scroll::-webkit-scrollbar-track{
+        margin:0 40px;
+    }
+    .timetable-content h4{
+        padding:0 40px;
+        margin-bottom: 20px;
+    }
+
+    .speaker-modal{
+        max-width: 672px;
+        padding:40px;
+        border-radius: 40px;
+    }
+    .speaker-modal .modal-content{
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 40px;
+    }
+    .speaker-modal .modal-content .img{
+        max-width: 193px;
+    }
+    .speaker-modal .modal-content .img img{
+        display: block;
+        width: 100%;
+    }
+    .speaker-modal .modal-content .info{
+        width: calc(100% - 233px);
+        padding:27px 0;
+        border-top: 1px solid #2C2C2C;
+        border-bottom: 1px solid #2C2C2C;
+    }
+    .speaker-modal .modal-content .info table{
+        width: 100%;
+    }
+    .speaker-modal .modal-content .info table tbody{
+        display: table;
+    }
+    .speaker-modal .modal-content .info table tbody tr{
+        display: table-row;
+    }
+    .speaker-modal .modal-content .info table tbody tr th,
+    .speaker-modal .modal-content .info table tbody tr td{
+        display: table-cell;
+        vertical-align: top;
+        text-align: left;
+        padding:8.5px 0;
+    }
+    .speaker-modal .modal-content .info table tbody tr th{
+        width: 101px;
+    }
+    .speaker-modal .modal-content .info table tbody tr td{
+        margin-top: 0;
+    }
+    
+    .speaker-modal .btn-close{
+        right:0;
+        top:0;
+        background: transparent url(../images/icon_close_white.svg) no-repeat center center / cover;
+        width: 22px;
+        height: 22px;
+        transform: translate(calc(100% + 4px),calc(-100% - 1px));
+    }
+}
+
+
+@media (min-width:1200px){
+    .conference-wrap section{
+        padding:80px 0;
+    }
+    .conference-wrap .section-header{
+        margin-bottom: 60px;
+    }
+
+    .conference-intro .intro-list{
+        gap: 160px;
+    }
+    .conference-intro .intro-item{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 64px;
+    }
+    .conference-intro .intro-item .img{
+        height: 446px;
+        width: calc(100% - 538px);
+    } 
+    .conference-intro .intro-item .img .bg{
+        background-image: url(../images/conference-bg-desktop.png);
+    }
+    .conference-intro .intro-item.item-2 .img{
+        margin-top: 0;
+        height: 455px;
+        width: 49%;
+    }
+    .conference-intro .intro-item .text {
+        width: 474px;
+    }
+    .conference-intro .intro-item.item-2 .text{
+        margin-top: 0;
+        height: 455px;
+        width: 36.5%;
+    }
+    .conference-intro .intro-item .text .item-content tbody th{
+        width: 105px;
+        padding:8px 0;
+        vertical-align: top;
+    }
+    .conference-intro .intro-item .text .item-content tbody td{
+        padding:8px 0;
+        vertical-align: top;
+    }
+    .conference-intro .intro-item .text{
+        gap: 40px;
+    }
+    .conference-intro .reg-btn{
+        margin-top: 60px;
+        height: 62px;
+        padding:20px 0;
+    }
+    .timetable-tab{
+        margin-top: -20px;
+    }
+    .timetable-contents{
+        padding:60px 0 80px;
+    }
+    .timetable-content .table-scroll{
+        padding:0 40px 28px;
+    }
+
+    .conference-wrap section.conference-speaker{
+        padding:80px 0 160px
+    }
+}
+
+
+@media (min-width:1440px){
+    .timetable-content h4{
+        padding:0;
+    }
+    .timetable-content .table-scroll{
+        overflow: hidden;
+        padding:0;
+    }
+    .timetable-content .table-scroll table{
+        width: 100%;
+    }
+}

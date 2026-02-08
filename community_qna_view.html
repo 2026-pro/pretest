@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q&A 상세 | ABCD X with K-BioX</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="./assets/js/ui.js"></script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="community-wrap">
+                <div class="inner">
+                    <nav class="community-tabs">
+                        <a href="./community_notice.html">공지사항</a>
+                        <a href="./community_library.html">자료실</a>
+                        <a href="./community_qna.html" class="active">Q&A</a>
+                    </nav>
+                    <article class="board-view">
+                        <div class="view-header">
+                            <h2 class="view-title">전시회 부스 신청 문의</h2>
+                            <div class="view-meta">
+                                <span>홍길동</span>
+                                <span>2025.11.14</span>
+                                <span>조회 45</span>
+                            </div>
+                        </div>
+                        <div class="view-content">
+                            <p>전시회 부스 신청을 하고 싶은데, 어떤 절차로 진행하면 되는지 안내 부탁드립니다.</p>
+                        </div>
+                        <div class="answer-box">
+                            <div class="answer-label">답변</div>
+                            <div class="answer-content">
+                                <p>안녕하세요. ABCD X 운영사무국입니다.</p>
+                                <p>부스 신청은 사이트 상단의 EXHIBITOR 메뉴에서 참가 기업 신청을 통해 진행하실 수 있습니다. 신청서 작성 후 담당자가 검토하여 연락드리겠습니다.</p>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="btn-wrap" style="margin-top:40px;text-align:center;">
+                        <a href="./community_qna.html" class="btn" style="display:inline-block;padding:12px 32px;background:var(--bg-darkgray2);border-radius:8px;text-decoration:none;color:#fff;">목록</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/supabase-helpers.js"></script>
+</body>
+</html>
+

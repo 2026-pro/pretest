@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자료실 작성 | 관리자</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/layout.css">
+    <link rel="stylesheet" href="./assets/css/community.css">
+    <link rel="stylesheet" href="./assets/css/admin.css">
+    <link rel="stylesheet" href="./assets/css/form.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <script src="./assets/js/ui.js"></script>
+    <style>
+        .ql-container.ql-snow { font-size: 14px; }
+        .ql-editor.ql-blank::before { color: #666; }
+        .ql-toolbar.ql-snow { background: #f9f9f9; border: 1px solid #E8E8E8; }
+        .file-attach-wrap { display: flex; flex-direction: column; gap: 12px; }
+        .file-attach-item { display: flex; align-items: center; gap: 12px; }
+        .file-attach-item input[type="file"] { display: none; }
+        .file-attach-item label { background: #1E96E1; color: white; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+        .file-attach-item label:hover { background: #1684c8; }
+        .file-attach-item .file-name { color: #666; }
+        .file-attach-item .file-name.empty { color: #999; }
+        .file-attach-item .remove-file { color: #e74c3c; cursor: pointer; font-size: 12px; }
+        .add-file-btn { background: #27ae60; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-top: 8px; }
+        .add-file-btn:hover { background: #229954; }
+        .add-file-btn:disabled { background: #999; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header-container"></div>
+        <script src="./assets/js/header.js"></script>
+        <div id="content">
+            <div class="admin-wrap">
+                <div class="inner">
+                    <h1 class="page-title">자료실 작성</h1>
+                    <form class="board-form form-wrap" id="library-form" action="#" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>제목</label>
+                            <input type="text" name="title" id="title" placeholder="제목을 입력하세요" required>
+                        </div>
+                        <div class="form-group">
+                            <label>내용</label>
+                            <div class="editor-wrap">
+                                <div id="editor"></div>
+                            </div>
+                            <input type="hidden" name="content" id="content-input">
+                        </div>
+                        <div class="form-group">
+                            <label>첨부파일 (최대 10개, 필수)</label>
+                            <div class="file-attach-wrap" id="file-attach-wrap">
+                                <div class="file-attach-item">
+                                    <input type="file" name="files" class="attach-file" data-index="0" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.hwp,.zip,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov" required>
+                                    <label>파일 선택</label>
+                                    <span class="file-name empty">첨부할 파일을 선택하세요</span>
+                                </div>
+                            </div>
+                            <button type="button" class="add-file-btn" id="add-file-btn">+ 파일 추가</button>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="submit" class="btn btn-submit">등록</button>
+                            <a href="./admin.html" class="btn btn-cancel">취소</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="footer-container"></div>
+        <script src="./assets/js/footer.js"></script>
+    </div>
+
+    <!-- Supabase 스크립트 -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/community-api.js"></script>
+    
+    <script>
+        // Quill 에디터 초기화 (이미지, 비디오 포함)
+        var quill = new Quill('#editor', {
+            theme: 'snow',
+            placeholder: '자료에 대한 설명을 입력하세요',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{'header': [1, 2, 3, false]}],
+                    [{'list': 'ordered'}, {'list': 'bullet'}],
+                    ['blockquote', 'code-block'],
+                    ['link', 'image', 'video'],
+                    ['clean']
+                ]
+            }
+        });
+
+        // 파일 첨부 UI 관리
+        var fileCount = 1;
+        const maxFiles = 10;
+
+        function updateAddFileBtn() {
+            $('#add-file-btn').prop('disabled', fileCount >= maxFiles);
+        }
+
+        function addFileInput() {
+            if (fileCount >= maxFiles) return;
+            
+            var html = `<div class="file-attach-item">
+                <input type="file" name="files" class="attach-file" data-index="${fileCount}" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.hwp,.zip,.jpg,.jpeg,.png,.gif,.mp4,.avi,.mov">
+                <label>파일 선택</label>
+                <span class="file-name empty">첨부할 파일을 선택하세요</span>
+                <span class="remove-file" data-index="${fileCount}">✕ 제거</span>
+            </div>`;
+            
+            $('#file-attach-wrap').append(html);
+            fileCount++;
+            
+            // 새로 추가된 input에 이벤트 바인딩
+            $('.attach-file').last().on('change', onFileChange);
+            $('[data-index="' + (fileCount - 1) + '"].remove-file').on('click', removeFileInput);
+            
+            updateAddFileBtn();
+        }
+
+        function removeFileInput(e) {
+            var idx = $(this).data('index');
+            $(this).closest('.file-attach-item').remove();
+            fileCount--;
+            updateAddFileBtn();
+        }
+
+        function onFileChange() {
+            var $input = $(this);
+            var name = $input.val().split('\\\\').pop();
+            var $nameSpan = $input.siblings('.file-name');
+            $nameSpan.text(name || '첨부할 파일을 선택하세요').toggleClass('empty', !name);
+        }
+
+        // 초기 파일 입력 이벤트 바인딩
+        $('.attach-file').on('change', onFileChange);
+        $('#add-file-btn').on('click', addFileInput);
+        updateAddFileBtn();
+
+        // Form submit 핸들러
+        $('#library-form').on('submit', async function(e) {
+            e.preventDefault();
+            
+            var $form = $(this);
+            var title = $('#title').val().trim();
+            var content = quill.root.innerHTML;
+            var $submitBtn = $form.find('.btn-submit');
+            
+            // 유효성 검사
+            if (!title) {
+                alert('제목을 입력하세요');
+                return;
+            }
+            if (quill.getText().trim().length === 0) {
+                alert('내용을 입력하세요');
+                return;
+            }
+            
+            // 첨부파일 확인
+            var files = document.querySelectorAll('.attach-file');
+            var hasFiles = false;
+            for (var i = 0; i < files.length; i++) {
+                if (files[i].files && files[i].files.length > 0) {
+                    hasFiles = true;
+                    break;
+                }
+            }
+            
+            if (!hasFiles) {
+                alert('최소 1개 이상의 파일을 첨부해야 합니다');
+                return;
+            }
+            
+            $submitBtn.disabled = true;
+            $submitBtn.textContent = '저장 중...';
+            
+            try {
+                // 파일 업로드와 함께 저장
+                var fileInputs = [];
+                for (var i = 0; i < files.length; i++) {
+                    if (files[i].files && files[i].files.length > 0) {
+                        fileInputs.push(files[i].files);
+                    }
+                }
+                
+                var result = await ABCDX.community.library.create({
+                    title: title,
+                    content: content
+                }, fileInputs[0]);
+                
+                if (!result.data) throw new Error('자료 저장 실패');
+                
+                console.log('✅ 자료실 저장 성공:', result.data.id);
+                alert('자료가 등록되었습니다.');
+                location.href = './admin.html';
+                
+            } catch (err) {
+                console.error('❌ 저장 오류:', err);
+                alert('저장 중 오류가 발생했습니다: ' + err.message);
+            } finally {
+                $submitBtn.disabled = false;
+                $submitBtn.textContent = '등록';
+            }
+        });
+    </script>
+</body>
+</html>
+
